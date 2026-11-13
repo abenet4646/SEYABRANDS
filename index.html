@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEYA BRAND SHOES | Step Into Icon Status. Without the Markup.</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        alabaster: '#F8F9FA',
+                        obsidian: '#121212',
+                        cobalt: '#2563EB',
+                        volt: '#84CC16',
+                        coral: '#EF4444',
+                    },
+                    fontFamily: {
+                        display: ['"Space Grotesk"', 'sans-serif'],
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    borderRadius: {
+                        'street': '8px',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #F8F9FA;
+            color: #121212;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, .font-display {
+            font-family: 'Space Grotesk', sans-serif;
+            letter-spacing: -0.03em;
+        }
+
+        #hero-3d-container {
+            width: 100%;
+            height: 100%;
+            min-height: 400px;
+            cursor: grab;
+            touch-action: pan-y;
+        }
+        #hero-3d-container:active {
+            cursor: grabbing;
+        }
+
+        .product-card {
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .product-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 35px -10px rgba(18, 18, 18, 0.08);
+        }
+        .product-img-secondary {
+            opacity: 0;
+            transform: scale(1.04);
+            transition: opacity 0.4s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .product-card:hover .product-img-secondary {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .bg-grid-pattern {
+            background-image: radial-gradient(rgba(18, 18, 18, 0.08) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+        .animate-float {
+            animation: floatSlow 4.5s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-cobalt selection:text-white">
+
+    <div class="bg-obsidian text-white text-xs sm:text-sm py-2.5 px-4 border-b border-white/10">
+        <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-center sm:justify-between gap-2 text-center">
+            <div class="flex items-center gap-2 font-medium tracking-wide">
+                <span class="inline-block w-2 h-2 rounded-full bg-volt animate-pulse"></span>
+                <span>በድሬዳዋ የሚገኘው የሴያ ብራንድስ ጫማ መደብር ዘመናዊና ጥራት ያላቸው ጫማዎችን ያቀርባል።&nbsp;|&nbsp; Fast Local Delivery &nbsp;|&nbsp; Easy Size Exchanges</span>
+            </div>
+            <div class="hidden md:flex items-center gap-4 text-gray-300 text-xs">
+                <a href="https://www.tiktok.com/@trustbrandshoes7" target="_blank" rel="noopener noreferrer" class="hover:text-volt transition-colors font-semibold">OUR TIKTOK</a>
+                <span>•</span>
+                <a href="tel:0923202438" class="hover:text-volt transition-colors flex items-center gap-1">
+                    <i data-lucide="phone" class="w-3.5 h-3.5 text-volt"></i> 0923202438
+                </a>
+                <span>•</span>
+                <span class="flex items-center gap-1">
+                    <i data-lucide="map-pin" class="w-3.5 h-3.5 text-cobalt"></i> ድሬዳዋ አሸዋ ገበያ ማዕከል
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <header class="sticky top-0 z-40 bg-alabaster/90 backdrop-blur-md border-b border-gray-200/80 transition-all">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-18 py-3.5 gap-4">
+                
+                <div class="flex items-center gap-3">
+                    <button id="mobile-menu-btn" aria-label="Open Menu" class="lg:hidden p-2 rounded-street text-obsidian hover:bg-gray-200/70 transition">
+                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    </button>
+                    <a href="#" class="logo6 flex items-center gap-2.5 group">
+                        <img width="44" height="40" src="logo6.jpg" alt="SEYA BRAND" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" class="rounded-[6px] object-cover">
+                        <span class="hidden w-10 h-10 rounded-[6px] bg-obsidian text-volt font-display font-extrabold items-center justify-center text-lg">S</span>
+                        <span class="logo-text font-display font-extrabold text-xl tracking-tight text-obsidian">SEYA BRAND<span class="text-cobalt">.</span></span>
+                    </a>
+                </div>
+
+                <nav class="hidden lg:flex items-center gap-7 text-sm font-semibold text-gray-700">
+                    <a href="#trending" onclick="filterByCategory('All')" class="text-obsidian hover:text-cobalt transition-colors">Shop All</a>
+                    <a href="#trending" onclick="filterByCategory('Streetwear Classics')" class="hover:text-cobalt transition-colors">Men</a>
+                    <a href="#trending" onclick="filterByCategory('Everyday Casual')" class="hover:text-cobalt transition-colors">Women</a>
+                    <a href="#trending" onclick="filterByCategory('Running & Sport')" class="hover:text-cobalt transition-colors">New Arrivals</a>
+                    <a href="#trending" onclick="filterByCategory('Deals')" class="inline-flex items-center gap-1.5 text-coral hover:opacity-80 transition-opacity font-bold">
+                        <i data-lucide="flame" class="w-4 h-4 fill-coral"></i> Deals
+                    </a>
+                </nav>
+
+                <div class="flex items-center gap-2 sm:gap-3">
+                    <div class="relative hidden sm:block w-48 md:w-64">
+                        <i data-lucide="search" class="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2"></i>
+                        <input 
+                            type="text" 
+                            id="live-search-input" 
+                            placeholder="Search Nike, Adidas, Jordans..." 
+                            class="w-full pl-9 pr-3 py-2 text-sm bg-white border border-gray-200 rounded-street focus:outline-none focus:border-cobalt focus:ring-2 focus:ring-cobalt/15 transition"
+                        >
+                    </div>
+
+                    <button id="mobile-search-toggle" aria-label="Search" class="sm:hidden p-2.5 rounded-street text-obsidian hover:bg-gray-200/70 transition">
+                        <i data-lucide="search" class="w-5 h-5"></i>
+                    </button>
+
+                    <button onclick="showToast('Saved to your Wishlist!')" aria-label="Wishlist" class="relative p-2.5 rounded-street text-obsidian hover:bg-gray-200/70 transition">
+                        <i data-lucide="heart" class="w-5 h-5"></i>
+                        <span id="wishlist-badge" class="hidden absolute top-1.5 right-1.5 w-2 h-2 bg-coral rounded-full"></span>
+                    </button>
+
+                    <button id="cart-btn" aria-label="Shopping Cart" class="relative flex items-center gap-2 bg-obsidian hover:bg-cobalt text-white px-3.5 py-2.5 rounded-street text-sm font-semibold transition-colors shadow-sm">
+                        <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+                        <span class="hidden md:inline">Bag</span>
+                        <span id="cart-count" class="bg-volt text-obsidian text-xs font-extrabold px-1.5 py-0.5 rounded-[4px] leading-none">0</span>
+                    </button>
+                </div>
+            </div>
+
+            <div id="mobile-search-bar" class="hidden pb-3 sm:hidden">
+                <div class="relative">
+                    <i data-lucide="search" class="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2"></i>
+                    <input 
+                        type="text" 
+                        id="mobile-search-input" 
+                        placeholder="Search brand shoes, sizes..." 
+                        class="w-full pl-9 pr-4 py-2.5 text-sm bg-white border border-gray-200 rounded-street focus:outline-none focus:border-cobalt"
+                    >
+                </div>
+            </div>
+        </div>
+
+        <div id="mobile-menu" class="hidden lg:hidden bg-white border-b border-gray-200 px-4 pt-2 pb-5 space-y-2 shadow-lg">
+            <a href="#trending" onclick="filterByCategory('All')" class="block py-2.5 px-3 rounded-street font-semibold text-obsidian hover:bg-alabaster">Shop All</a>
+            <a href="#trending" onclick="filterByCategory('Streetwear Classics')" class="block py-2.5 px-3 rounded-street font-semibold text-gray-700 hover:bg-alabaster">Men</a>
+            <a href="#trending" onclick="filterByCategory('Everyday Casual')" class="block py-2.5 px-3 rounded-street font-semibold text-gray-700 hover:bg-alabaster">Women</a>
+            <a href="#trending" onclick="filterByCategory('Running & Sport')" class="block py-2.5 px-3 rounded-street font-semibold text-gray-700 hover:bg-alabaster">New Arrivals</a>
+            <a href="#trending" onclick="filterByCategory('Deals')" class="block py-2.5 px-3 rounded-street font-bold text-coral bg-coral/5">🔥 Hot Deals</a>
+            <div class="pt-2 border-t border-gray-100 flex items-center justify-between text-xs text-gray-500 px-3">
+                <span>📍 ድሬዳዋ አሸዋ ገበያ ማዕከል</span>
+                <a href="tel:0923202438" class="font-bold text-cobalt">0923202438</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="relative overflow-hidden bg-alabaster bg-grid-pattern border-b border-gray-200/80">
+        <div class="absolute -top-24 -right-24 w-96 h-96 bg-cobalt/15 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-0 left-10 w-80 h-80 bg-volt/15 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14 lg:py-20">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+                
+                <div class="lg:col-span-6 space-y-6 z-10">
+                    <div class="inline-flex items-center gap-2 bg-white border border-gray-200 px-3.5 py-1.5 rounded-street shadow-xs">
+                        <span class="px-2 py-0.5 text-[11px] font-extrabold uppercase tracking-wider bg-volt text-obsidian rounded-[4px]">NEW DROP</span>
+                        <span class="text-xs sm:text-sm font-semibold text-gray-700">Dire Dawa's #1 Brand Footwear Destination</span>
+                    </div>
+
+                    <h1 class="font-display font-extrabold text-4xl sm:text-5xl lg:text-[62px] text-obsidian leading-[1.05]">
+                        Step Into Icon Status. <br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-cobalt to-blue-500">Without the Markup.</span>
+                    </h1>
+
+                    <p class="text-base sm:text-lg text-gray-600 max-w-xl leading-relaxed">
+                        Curated authentic-grade brand sneakers, daily runners, and heritage leather classics. Direct sourcing means unbeatable suitable prices—verified for comfort and craftsmanship before every pair ships.
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 pt-2">
+                        <a href="#trending" onclick="filterByCategory('All')" class="inline-flex items-center justify-center gap-2.5 bg-cobalt hover:bg-blue-700 text-white font-display font-bold text-base px-7 py-4 rounded-street shadow-lg shadow-cobalt/25 transition-all hover:-translate-y-0.5">
+                            <span>Shop New Arrivals</span>
+                            <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#trending" onclick="filterByCategory('Deals')" class="inline-flex items-center justify-center gap-2 bg-white hover:bg-obsidian text-obsidian hover:text-white border-2 border-obsidian font-display font-bold text-base px-7 py-4 rounded-street transition-all">
+                            <i data-lucide="tag" class="w-4 h-4 text-coral"></i>
+                            <span>Explore Deals</span>
+                        </a>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-4 pt-4 border-t border-gray-200/80 max-w-lg">
+                        <div>
+                            <p class="font-display font-extrabold text-xl sm:text-2xl text-obsidian">100%</p>
+                            <p class="text-xs text-gray-500 font-medium">Quality Inspected</p>
+                        </div>
+                        <div>
+                            <p class="font-display font-extrabold text-xl sm:text-2xl text-cobalt">Up to 35%</p>
+                            <p class="text-xs text-gray-500 font-medium">Below Retail Price</p>
+                        </div>
+                        <div>
+                            <p class="font-display font-extrabold text-xl sm:text-2xl text-obsidian">24-48h</p>
+                            <p class="text-xs text-gray-500 font-medium">Fast Dispatch</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-6 relative">
+                    <div class="relative w-full h-[380px] sm:h-[460px] lg:h-[510px] bg-gradient-to-br from-white via-gray-100 to-gray-200/70 rounded-2xl border border-gray-200/90 shadow-xl overflow-hidden">
+                        
+                        <div id="hero-3d-container"></div>
+
+                        <div class="absolute top-4 left-4 bg-white/90 backdrop-blur-md border border-gray-200 px-3 py-1.5 rounded-street flex items-center gap-2 shadow-xs pointer-events-none">
+                            <i data-lucide="rotate-3d" class="w-4 h-4 text-cobalt animate-spin" style="animation-duration: 8s;"></i>
+                            <span class="text-xs font-bold text-obsidian">3D Interactive • Drag to Rotate</span>
+                        </div>
+
+                        <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-md border border-gray-200 p-1.5 rounded-street flex items-center gap-1.5 shadow-xs z-10">
+                            <button onclick="setSneakerColorway('cobalt')" title="Electric Cobalt" class="w-6 h-6 rounded-[4px] bg-cobalt ring-2 ring-offset-1 ring-obsidian transition-transform hover:scale-110"></button>
+                            <button onclick="setSneakerColorway('volt')" title="Street Volt" class="w-6 h-6 rounded-[4px] bg-volt transition-transform hover:scale-110"></button>
+                            <button onclick="setSneakerColorway('coral')" title="Crimson Coral" class="w-6 h-6 rounded-[4px] bg-coral transition-transform hover:scale-110"></button>
+                            <button onclick="setSneakerColorway('obsidian')" title="Triple Obsidian" class="w-6 h-6 rounded-[4px] bg-obsidian transition-transform hover:scale-110"></button>
+                        </div>
+
+                        <div class="animate-float absolute bottom-4 left-4 right-4 sm:right-auto sm:w-80 bg-obsidian/95 backdrop-blur-md text-white p-4 rounded-street border border-white/10 shadow-2xl flex items-center justify-between gap-3">
+                            <div>
+                                <div class="flex items-center gap-2">
+                                    <span class="text-[10px] font-bold uppercase tracking-wider bg-coral text-white px-1.5 py-0.5 rounded-[4px]">SAVE 28%</span>
+                                    <span class="text-xs text-gray-400">Featured Edition</span>
+                                </div>
+                                <h3 class="font-display font-bold text-base mt-1">SEYA AeroCourt Low '26</h3>
+                                <div class="flex items-baseline gap-2 mt-0.5">
+                                    <span class="font-display font-extrabold text-volt text-lg">3,450 ETB</span>
+                                    <span class="text-xs text-gray-400 line-through">4,800 ETB</span>
+                                </div>
+                            </div>
+                            <button onclick="addFeaturedToCart()" class="bg-cobalt hover:bg-blue-500 text-white p-3 rounded-street transition-colors shrink-0" title="Add Featured Shoe">
+                                <i data-lucide="plus" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="py-10 bg-white border-b border-gray-200/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between mb-6">
+                <div>
+                    <h2 class="font-display font-extrabold text-xl sm:text-2xl text-obsidian">Shop by Style & Vibe</h2>
+                    <p class="text-xs sm:text-sm text-gray-500 mt-0.5">Tap a category to filter the collection instantly</p>
+                </div>
+                <button onclick="filterByCategory('All')" class="text-xs sm:text-sm font-bold text-cobalt hover:underline flex items-center gap-1">
+                    Reset Filter <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+                </button>
+            </div>
+
+            <div class="flex lg:grid lg:grid-cols-5 gap-3.5 overflow-x-auto no-scrollbar pb-2">
+                
+                <button onclick="filterByCategory('All')" data-cat="All" class="cat-tile active-cat shrink-0 w-44 lg:w-auto text-left p-4 rounded-street border-2 border-obsidian bg-obsidian text-white transition-all group">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="p-2 rounded-[6px] bg-white/10 text-volt"><i data-lucide="layers" class="w-5 h-5"></i></span>
+                        <span class="text-xs font-bold opacity-75">08 Pairs</span>
+                    </div>
+                    <p class="font-display font-bold text-base">All Kicks</p>
+                    <p class="text-xs text-gray-300 mt-0.5">Full SEYA Catalog</p>
+                </button>
+
+                <button onclick="filterByCategory('Streetwear Classics')" data-cat="Streetwear Classics" class="cat-tile shrink-0 w-44 lg:w-auto text-left p-4 rounded-street border border-gray-200 bg-alabaster hover:border-obsidian transition-all group">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="p-2 rounded-[6px] bg-white text-obsidian shadow-2xs group-hover:bg-cobalt group-hover:text-white transition-colors"><i data-lucide="crown" class="w-5 h-5"></i></span>
+                        <span class="text-xs font-semibold text-gray-400">Iconic</span>
+                    </div>
+                    <p class="font-display font-bold text-base text-obsidian">Streetwear Classics</p>
+                    <p class="text-xs text-gray-500 mt-0.5">Dunks, Air & Retro Lows</p>
+                </button>
+
+                <button onclick="filterByCategory('Running & Sport')" data-cat="Running & Sport" class="cat-tile shrink-0 w-44 lg:w-auto text-left p-4 rounded-street border border-gray-200 bg-alabaster hover:border-obsidian transition-all group">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="p-2 rounded-[6px] bg-white text-obsidian shadow-2xs group-hover:bg-cobalt group-hover:text-white transition-colors"><i data-lucide="zap" class="w-5 h-5"></i></span>
+                        <span class="text-xs font-semibold text-gray-400">Active</span>
+                    </div>
+                    <p class="font-display font-bold text-base text-obsidian">Running & Sport</p>
+                    <p class="text-xs text-gray-500 mt-0.5">Cushioned Mesh & Boost</p>
+                </button>
+
+                <button onclick="filterByCategory('Everyday Casual')" data-cat="Everyday Casual" class="cat-tile shrink-0 w-44 lg:w-auto text-left p-4 rounded-street border border-gray-200 bg-alabaster hover:border-obsidian transition-all group">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="p-2 rounded-[6px] bg-white text-obsidian shadow-2xs group-hover:bg-cobalt group-hover:text-white transition-colors"><i data-lucide="compass" class="w-5 h-5"></i></span>
+                        <span class="text-xs font-semibold text-gray-400">Daily</span>
+                    </div>
+                    <p class="font-display font-bold text-base text-obsidian">Everyday Casual</p>
+                    <p class="text-xs text-gray-500 mt-0.5">Campus & Weekend Fits</p>
+                </button>
+
+                <button onclick="filterByCategory('Formal/Smart')" data-cat="Formal/Smart" class="cat-tile shrink-0 w-44 lg:w-auto text-left p-4 rounded-street border border-gray-200 bg-alabaster hover:border-obsidian transition-all group">
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="p-2 rounded-[6px] bg-white text-obsidian shadow-2xs group-hover:bg-cobalt group-hover:text-white transition-colors"><i data-lucide="briefcase" class="w-5 h-5"></i></span>
+                        <span class="text-xs font-semibold text-amber-700">Brana Craft</span>
+                    </div>
+                    <p class="font-display font-bold text-base text-obsidian">Formal / Smart</p>
+                    <p class="text-xs text-gray-500 mt-0.5">Brana Heritage Leather</p>
+                </button>
+
+            </div>
+
+            <div class="mt-7 pt-6 border-t border-gray-100 flex flex-wrap items-center justify-between gap-4">
+                <span class="text-xs font-bold uppercase tracking-widest text-gray-400">Featured Brands:</span>
+                <div class="flex flex-wrap items-center gap-2 sm:gap-3">
+                    <button onclick="filterByBrand('Nike')" class="brand-pill px-3.5 py-1.5 rounded-street text-xs font-bold bg-alabaster hover:bg-obsidian hover:text-white border border-gray-200 transition">NIKE</button>
+                    <button onclick="filterByBrand('Adidas')" class="brand-pill px-3.5 py-1.5 rounded-street text-xs font-bold bg-alabaster hover:bg-obsidian hover:text-white border border-gray-200 transition">ADIDAS</button>
+                    <button onclick="filterByBrand('Jordan')" class="brand-pill px-3.5 py-1.5 rounded-street text-xs font-bold bg-alabaster hover:bg-obsidian hover:text-white border border-gray-200 transition">AIR JORDAN</button>
+                    <button onclick="filterByBrand('New Balance')" class="brand-pill px-3.5 py-1.5 rounded-street text-xs font-bold bg-alabaster hover:bg-obsidian hover:text-white border border-gray-200 transition">NEW BALANCE</button>
+                    <button onclick="filterByBrand('Brana Leather')" class="brand-pill px-3.5 py-1.5 rounded-street text-xs font-bold bg-amber-50 text-amber-900 hover:bg-obsidian hover:text-white border border-amber-200 transition">BRANA ORIGIN LEATHER</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="trending" class="py-14 sm:py-20 bg-alabaster">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
+                <div>
+                    <div class="inline-flex items-center gap-1.5 text-cobalt font-bold text-xs uppercase tracking-widest mb-2">
+                        <i data-lucide="trending-up" class="w-4 h-4"></i> High-Demand Rotation
+                    </div>
+                    <h2 class="font-display font-extrabold text-3xl sm:text-4xl text-obsidian">Trending & Best Sellers</h2>
+                </div>
+                <div class="flex items-center gap-3">
+                    <span id="active-filter-label" class="text-xs sm:text-sm font-semibold bg-white border border-gray-200 px-3.5 py-2 rounded-street text-gray-700">
+                        Showing: <strong class="text-obsidian">All Brand Shoes (8)</strong>
+                    </span>
+                </div>
+            </div>
+
+            <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            </div>
+
+            <div id="empty-search-state" class="hidden text-center py-16 bg-white rounded-street border border-gray-200">
+                <i data-lucide="search-x" class="w-12 h-12 text-gray-400 mx-auto mb-3"></i>
+                <h3 class="font-display font-bold text-xl text-obsidian">No kicks matched your search</h3>
+                <p class="text-sm text-gray-500 mt-1 mb-5">Try searching another brand, model, or reset filters.</p>
+                <button onclick="filterByCategory('All')" class="bg-obsidian text-white font-semibold text-sm px-5 py-2.5 rounded-street hover:bg-cobalt transition">
+                    Show All Shoes
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 bg-obsidian text-white relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-volt font-bold text-xs uppercase tracking-[0.2em]">The SEYA Standard</span>
+                <h2 class="font-display font-extrabold text-3xl sm:text-4xl mt-2">Why Smart Sneakerheads Shop SEYA</h2>
+                <p class="text-gray-400 text-sm sm:text-base mt-3">No inflated boutique markups. No guesswork on sizing. Just verified footwear delivered straight to your doorstep.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                
+                <div class="bg-white/5 border border-white/10 p-7 rounded-street hover:border-volt/50 transition-colors">
+                    <div class="w-12 h-12 rounded-street bg-cobalt/20 border border-cobalt/40 text-cobalt flex items-center justify-center mb-5">
+                        <i data-lucide="shield-check" class="w-6 h-6 text-volt"></i>
+                    </div>
+                    <h3 class="font-display font-bold text-xl mb-2">100% Quality Checked</h3>
+                    <p class="text-sm text-gray-300 leading-relaxed">
+                        Every single pair undergoes a 7-point stitching, sole-bond, and material inspection at our Dire Dawa hub before it reaches your hands.
+                    </p>
+                </div>
+
+                <div class="bg-white/5 border border-white/10 p-7 rounded-street hover:border-volt/50 transition-colors">
+                    <div class="w-12 h-12 rounded-street bg-volt/20 border border-volt/40 text-volt flex items-center justify-center mb-5">
+                        <i data-lucide="badge-percent" class="w-6 h-6 text-volt"></i>
+                    </div>
+                    <h3 class="font-display font-bold text-xl mb-2">Suitable Prices Always</h3>
+                    <p class="text-sm text-gray-300 leading-relaxed">
+                        Direct supplier partnerships eliminate middleman markups—giving students and young professionals authentic street-luxe style at fair everyday prices.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="font-display font-bold text-white text-base mb-4">Visit Our Store</h4>
+                    <ul class="space-y-3 text-sm">
+                        <li class="flex items-start gap-2.5">
+                            <i data-lucide="map-pin" class="w-4 h-4 text-volt shrink-0 mt-1"></i>
+                            <span>
+                                <strong class="text-white block">Dire Dawa Flagship:</strong>
+                                ድሬዳዋ አሸዋ ገበያ ማዕከል<br>
+                                <span class="text-xs text-gray-400">(Dire Dawa Ashewa Gebeya Center)</span>
+                            </span>
+                        </li>
+                        <li class="flex items-center gap-2.5">
+                            <i data-lucide="phone-call" class="w-4 h-4 text-cobalt shrink-0"></i>
+                            <a href="tel:0923202438" class="text-white font-bold hover:text-volt transition">0923202438</a>
+                        </li>
+                        <li class="flex items-center gap-2.5">
+                            <i data-lucide="clock" class="w-4 h-4 text-gray-400 shrink-0"></i>
+                            <span class="text-xs text-gray-400">Mon – Sun: 8:30 AM – 8:30 PM</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            </div>
+        </div>
+    </section>
+
+    <div id="cart-drawer" class="fixed inset-0 z-50 hidden">
+        <div id="cart-overlay" class="absolute inset-0 bg-obsidian/60 backdrop-blur-xs"></div>
+        <div class="absolute right-0 top-0 h-full w-full max-w-md bg-white shadow-2xl flex flex-col">
+            <div class="p-5 border-b border-gray-200 flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <i data-lucide="shopping-bag" class="w-5 h-5 text-cobalt"></i>
+                    <h3 class="font-display font-extrabold text-lg text-obsidian">Your SEYA Bag</h3>
+                </div>
+                <button id="close-cart-btn" class="p-2 rounded-street hover:bg-gray-100 text-gray-600">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+            <div id="cart-items-container" class="flex-1 overflow-y-auto p-5 space-y-4">
+                <p class="text-sm text-gray-500 text-center py-12">Your bag is currently empty.</p>
+            </div>
+            <div class="p-5 border-t border-gray-200 bg-alabaster space-y-4">
+                <div class="flex items-center justify-between text-sm">
+                    <span class="text-gray-600 font-medium">Estimated Total</span>
+                    <span id="cart-total" class="font-display font-extrabold text-xl text-obsidian">0 ETB</span>
+                </div>
+                <button onclick="checkoutOrder()" class="w-full bg-cobalt hover:bg-blue-700 text-white font-display font-bold py-3.5 rounded-street transition flex items-center justify-center gap-2">
+                    <span>Order via Phone / Direct</span>
+                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast-notification" class="fixed bottom-5 right-5 z-50 hidden transform transition-all duration-300 translate-y-4 opacity-0">
+        <div class="bg-obsidian text-white px-4 py-3 rounded-street shadow-xl border border-white/10 flex items-center gap-2.5 text-sm font-semibold">
+            <span class="w-2 h-2 rounded-full bg-volt"></span>
+            <span id="toast-message">Added to bag!</span>
+        </div>
+    </div>
+
+    <script>
+        const products = [
+            {
+                id: 1,
+                name: "Nike Dunk Low Retro 'Panda'",
+                brand: "Nike",
+                category: "Streetwear Classics",
+                price: 3600,
+                oldPrice: 4900,
+                deal: true,
+                sizes: ["40", "41", "42", "43", "44"],
+                imgPrimary: "https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?auto=format&fit=crop&w=800&q=80",
+                imgSecondary: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                id: 2,
+                name: "Air Jordan 1 Low 'University Blue'",
+                brand: "Jordan",
+                category: "Streetwear Classics",
+                price: 3950,
+                oldPrice: 5200,
+                deal: true,
+                sizes: ["41", "42", "43", "44"],
+                imgPrimary: "https://images.unsplash.com/photo-1552346154-21d32810aba3?auto=format&fit=crop&w=800&q=80",
+                imgSecondary: "https://images.unsplash.com/photo-1584735175315-9d5df23860e6?auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                id: 3,
+                name: "Adidas Ultraboost Light '26",
+                brand: "Adidas",
+                category: "Running & Sport",
+                price: 3400,
+                oldPrice: 4500,
+                deal: false,
+                sizes: ["40", "41", "42", "43"],
+                imgPrimary: "https://images.unsplash.com/photo-1587563871167-1ee9c731aefb?auto=format&fit=crop&w=800&q=80",
+                imgSecondary: "https://images.unsplash.com/photo-1608231387042-66d1773070a5?auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                id: 4,
+                name: "New Balance 550 'White Green'",
+                brand: "New Balance",
+                category: "Everyday Casual",
+                price: 3750,
+                oldPrice: 4800,
+                deal: true,
+                sizes: ["39", "40", "41", "42", "43"],
+                imgPrimary: "https://images.unsplash.com/photo-1539185441755-769473a23570?auto=format&fit=crop&w=800&q=80",
+                imgSecondary: "https://images.unsplash.com/photo-1551107696-a4b0c5a0d9a2?auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                id: 5,
+                name: "Nike Air Force 1 '07 Triple White",
+                brand: "Nike",
+                category: "Everyday Casual",
+                price: 3250,
+                oldPrice: 4200,
+                deal: false,
+                sizes: ["38", "39", "40", "41", "42", "43", "44"],
+                imgPrimary: "https://images.unsplash.com/photo-1549298916-b41d501d3772?auto=format&fit=crop&w=800&q=80",
+                imgSecondary: "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                id: 6,
+                name: "Adidas Samba OG 'Cloud White'",
+                brand: "Adidas",
+                category: "Streetwear Classics",
+                price: 3500,
+                oldPrice: 4600,
+                deal: true,
+                sizes: ["39", "40", "41", "42", "43"],
+                imgPrimary: "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?auto=format&fit=crop&w=800&q=80",
+                imgSecondary: "https://images.unsplash.com/photo-1560769629-975ec94e6a86?auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                id: 7,
+                name: "New Balance 9060 'Sea Salt'",
+                brand: "New Balance",
+                category: "Running & Sport",
+                price: 4100,
+                oldPrice: 5400,
+                deal: false,
+                sizes: ["40", "41", "42", "43", "44"],
+                imgPrimary: "https://images.unsplash.com/photo-1605348532760-6753d2c43329?auto=format&fit=crop&w=800&q=80",
+                imgSecondary: "https://images.unsplash.com/photo-1491553895911-0055eca6402d?auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                id: 8,
+                name: "Brana Origin Handcrafted Oxford",
+                brand: "Brana Leather",
+                category: "Formal/Smart",
+                price: 3300,
+                oldPrice: 4300,
+                deal: false,
+                sizes: ["40", "41", "42", "43", "44"],
+                imgPrimary: "https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?auto=format&fit=crop&w=800&q=80",
+                imgSecondary: "https://images.unsplash.com/photo-1533867617858-e7b97e060509?auto=format&fit=crop&w=800&q=80"
+            }
+        ];
+
+        let cart = [];
+        let currentCategory = 'All';
+        let currentBrand = null;
+        let searchQuery = '';
+
+        function renderProducts() {
+            const grid = document.getElementById('products-grid');
+            const emptyState = document.getElementById('empty-search-state');
+            const filterLabel = document.getElementById('active-filter-label');
+
+            const filtered = products.filter(p => {
+                const matchesCat =
+                    currentCategory === 'All' ||
+                    (currentCategory === 'Deals' && p.deal) ||
+                    p.category === currentCategory;
+                const matchesBrand = !currentBrand || p.brand.toLowerCase() === currentBrand.toLowerCase();
+                const matchesSearch =
+                    !searchQuery ||
+                    p.name.toLowerCase().includes(searchQuery) ||
+                    p.brand.toLowerCase().includes(searchQuery) ||
+                    p.category.toLowerCase().includes(searchQuery) ||
+                    p.sizes.some(s => s.includes(searchQuery));
+                return matchesCat && matchesBrand && matchesSearch;
+            });
+
+            const activeName = currentBrand
+                ? `${currentBrand} (${filtered.length})`
+                : `${currentCategory === 'All' ? 'All Brand Shoes' : currentCategory} (${filtered.length})`;
+            filterLabel.innerHTML = `Showing: <strong class="text-obsidian">${activeName}</strong>`;
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                lucide.createIcons();
+                return;
+            }
+
+            emptyState.classList.add('hidden');
+            grid.innerHTML = filtered.map(product => {
+                const discount = Math.round(((product.oldPrice - product.price) / product.oldPrice) * 100);
+                return `
+                    <div class="product-card bg-white rounded-street border border-gray-200/90 overflow-hidden flex flex-col justify-between group">
+                        <div>
+                            <div class="relative aspect-[4/3] bg-gray-100 overflow-hidden">
+                                <img src="${product.imgPrimary}" alt="${product.name}" class="w-full h-full object-cover">
+                                <img src="${product.imgSecondary}" alt="${product.name} alternate" class="product-img-secondary absolute inset-0 w-full h-full object-cover">
+                                <div class="absolute top-3 left-3 flex items-center gap-1.5">
+                                    <span class="bg-obsidian text-white text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-[4px]">${product.brand}</span>
+                                    ${product.deal ? `<span class="bg-coral text-white text-[10px] font-extrabold px-2 py-1 rounded-[4px]">-${discount}%</span>` : ''}
+                                </div>
+                                <button onclick="toggleWishlist()" aria-label="Save item" class="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/90 hover:bg-obsidian hover:text-white text-obsidian flex items-center justify-center shadow-xs transition">
+                                    <i data-lucide="heart" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                            <div class="p-4">
+                                <p class="text-[11px] font-semibold text-gray-400 uppercase tracking-wider">${product.category}</p>
+                                <h3 class="font-display font-bold text-base text-obsidian mt-1 line-clamp-1">${product.name}</h3>
+                                <div class="flex items-center gap-1.5 mt-2.5 flex-wrap">
+                                    <span class="text-[11px] text-gray-400 font-medium">EU:</span>
+                                    ${product.sizes.map(sz => `<span class="text-[11px] font-semibold px-1.5 py-0.5 rounded-[4px] bg-alabaster border border-gray-200 text-gray-700">${sz}</span>`).join('')}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="px-4 pb-4 pt-2 border-t border-gray-100 flex items-center justify-between gap-2">
+                            <div>
+                                <span class="font-display font-extrabold text-lg text-obsidian">${product.price.toLocaleString()} ETB</span>
+                                <span class="block text-xs text-gray-400 line-through">${product.oldPrice.toLocaleString()} ETB</span>
+                            </div>
+                            <button onclick="addToCart(${product.id})" class="bg-obsidian hover:bg-cobalt text-white text-xs font-bold px-3.5 py-2.5 rounded-street transition flex items-center gap-1.5">
+                                <i data-lucide="shopping-bag" class="w-3.5 h-3.5"></i>
+                                <span>Add</span>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            lucide.createIcons();
+        }
+
+        function filterByCategory(category) {
+            currentCategory = category;
+            currentBrand = null;
+
+            document.querySelectorAll('.cat-tile').forEach(tile => {
+                const isSelected = tile.dataset.cat === category;
+                if (isSelected) {
+                    tile.className = 'cat-tile active-cat shrink-0 w-44 lg:w-auto text-left p-4 rounded-street border-2 border-obsidian bg-obsidian text-white transition-all group';
+                    const title = tile.querySelector('p.font-display');
+                    if (title) title.classList.replace('text-obsidian', 'text-white');
+                } else {
+                    tile.className = 'cat-tile shrink-0 w-44 lg:w-auto text-left p-4 rounded-street border border-gray-200 bg-alabaster hover:border-obsidian transition-all group';
+                    const title = tile.querySelector('p.font-display');
+                    if (title) title.classList.replace('text-white', 'text-obsidian');
+                }
+            });
+
+            const mobileMenu = document.getElementById('mobile-menu');
+            if (mobileMenu) mobileMenu.classList.add('hidden');
+
+            renderProducts();
+        }
+
+        function filterByBrand(brand) {
+            currentBrand = brand;
+            currentCategory = 'All';
+            renderProducts();
+            const trendingSection = document.getElementById('trending');
+            if (trendingSection) trendingSection.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+
+            const existing = cart.find(item => item.id === productId);
+            if (existing) {
+                existing.qty += 1;
+            } else {
+                cart.push({ ...product, qty: 1, selectedSize: product.sizes[1] || product.sizes[0] });
+            }
+            updateCartUI();
+            showToast(`Added ${product.name} to bag!`);
+        }
+
+        function addFeaturedToCart() {
+            const existing = cart.find(item => item.id === 999);
+            if (existing) {
+                existing.qty += 1;
+            } else {
+                cart.push({
+                    id: 999,
+                    name: "SEYA AeroCourt Low '26",
+                    brand: "SEYA",
+                    price: 3450,
+                    qty: 1,
+                    selectedSize: "42",
+                    imgPrimary: "https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?auto=format&fit=crop&w=800&q=80"
+                });
+            }
+            updateCartUI();
+            showToast("Added SEYA AeroCourt Low '26 to bag!");
+        }
+
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const countEl = document.getElementById('cart-count');
+            const container = document.getElementById('cart-items-container');
+            const totalEl = document.getElementById('cart-total');
+
+            const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+            const totalPrice = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+
+            countEl.textContent = totalItems;
+            totalEl.textContent = `${totalPrice.toLocaleString()} ETB`;
+
+            if (cart.length === 0) {
+                container.innerHTML = '<p class="text-sm text-gray-500 text-center py-12">Your bag is currently empty.</p>';
+                return;
+            }
+
+            container.innerHTML = cart.map(item => `
+                <div class="flex items-center gap-3.5 bg-alabaster p-3 rounded-street border border-gray-200">
+                    <img src="${item.imgPrimary}" alt="${item.name}" class="w-16 h-16 rounded-[6px] object-cover bg-white">
+                    <div class="flex-1 min-w-0">
+                        <h4 class="font-display font-bold text-sm text-obsidian truncate">${item.name}</h4>
+                        <p class="text-xs text-gray-500">Size EU ${item.selectedSize} • Qty ${item.qty}</p>
+                        <p class="font-display font-extrabold text-sm text-cobalt mt-0.5">${(item.price * item.qty).toLocaleString()} ETB</p>
+                    </div>
+                    <button onclick="removeFromCart(${item.id})" class="p-1.5 text-gray-400 hover:text-coral transition" aria-label="Remove">
+                        <i data-lucide="trash-2" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            `).join('');
+
+            lucide.createIcons();
+        }
+
+        function toggleWishlist() {
+            const badge = document.getElementById('wishlist-badge');
+            if (badge) badge.classList.remove('hidden');
+            showToast('Saved to your Wishlist!');
+        }
+
+        function checkoutOrder() {
+            if (cart.length === 0) {
+                showToast('Your bag is empty!');
+                return;
+            }
+            window.location.href = 'tel:0923202438';
+        }
+
+        let toastTimer;
+        function showToast(message) {
+            const toast = document.getElementById('toast-notification');
+            const msgEl = document.getElementById('toast-message');
+            msgEl.textContent = message;
+            toast.classList.remove('hidden');
+            requestAnimationFrame(() => {
+                toast.classList.remove('translate-y-4', 'opacity-0');
+            });
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => {
+                toast.classList.add('translate-y-4', 'opacity-0');
+                setTimeout(() => toast.classList.add('hidden'), 300);
+            }, 2600);
+        }
+
+        let sneakerAccentMat;
+        function setSneakerColorway(colorKey) {
+            if (!sneakerAccentMat) return;
+            const palette = {
+                cobalt: 0x2563EB,
+                volt: 0x84CC16,
+                coral: 0xEF4444,
+                obsidian: 0x121212
+            };
+            sneakerAccentMat.color.setHex(palette[colorKey] || 0x2563EB);
+        }
+
+        function init3DSneaker() {
+            const container = document.getElementById('hero-3d-container');
+            if (!container || typeof THREE === 'undefined') return;
+
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(40, container.clientWidth / container.clientHeight, 0.1, 100);
+            camera.position.set(0, 1.3, 5.2);
+
+            const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(container.clientWidth, container.clientHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            container.appendChild(renderer.domElement);
+
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.85);
+            scene.add(ambientLight);
+
+            const dirLight = new THREE.DirectionalLight(0xffffff, 0.9);
+            dirLight.position.set(4, 6, 5);
+            scene.add(dirLight);
+
+            const rimLight = new THREE.DirectionalLight(0x2563EB, 0.45);
+            rimLight.position.set(-4, 2, -4);
+            scene.add(rimLight);
+
+            const sneakerGroup = new THREE.Group();
+
+            const whiteMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.35, metalness: 0.05 });
+            const soleMat = new THREE.MeshStandardMaterial({ color: 0xf1f5f9, roughness: 0.6 });
+            sneakerAccentMat = new THREE.MeshStandardMaterial({ color: 0x2563EB, roughness: 0.3, metalness: 0.1 });
+            const darkMat = new THREE.MeshStandardMaterial({ color: 0x121212, roughness: 0.45 });
+
+            const soleGeo = new THREE.BoxGeometry(2.7, 0.35, 1.05);
+            const sole = new THREE.Mesh(soleGeo, soleMat);
+            sole.position.set(0, -0.45, 0);
+            sneakerGroup.add(sole);
+
+            const midsoleStripe = new THREE.Mesh(new THREE.BoxGeometry(2.72, 0.08, 1.07), sneakerAccentMat);
+            midsoleStripe.position.set(0, -0.32, 0);
+            sneakerGroup.add(midsoleStripe);
+
+            const upperBase = new THREE.Mesh(new THREE.BoxGeometry(2.45, 0.55, 0.96), whiteMat);
+            upperBase.position.set(-0.05, -0.02, 0);
+            sneakerGroup.add(upperBase);
+
+            const toeBox = new THREE.Mesh(new THREE.BoxGeometry(0.95, 0.42, 0.94), sneakerAccentMat);
+            toeBox.position.set(0.82, -0.08, 0);
+            toeBox.rotation.z = -0.18;
+            sneakerGroup.add(toeBox);
+
+            const collar = new THREE.Mesh(new THREE.BoxGeometry(1.1, 0.65, 0.98), darkMat);
+            collar.position.set(-0.72, 0.25, 0);
+            sneakerGroup.add(collar);
+
+            const tongue = new THREE.Mesh(new THREE.BoxGeometry(0.45, 0.72, 0.72), whiteMat);
+            tongue.position.set(-0.15, 0.38, 0);
+            tongue.rotation.z = -0.35;
+            sneakerGroup.add(tongue);
+
+            const swooshLeft = new THREE.Mesh(new THREE.BoxGeometry(1.3, 0.18, 0.06), sneakerAccentMat);
+            swooshLeft.position.set(-0.05, 0.02, 0.49);
+            swooshLeft.rotation.z = 0.22;
+            sneakerGroup.add(swooshLeft);
+
+            const swooshRight = swooshLeft.clone();
+            swooshRight.position.z = -0.49;
+            sneakerGroup.add(swooshRight);
+
+            sneakerGroup.rotation.set(0.18, -0.55, 0.08);
+            scene.add(sneakerGroup);
+
+            let isDragging = false;
+            let prevX = 0;
+            let prevY = 0;
+
+            const onPointerDown = (e) => {
+                isDragging = true;
+                prevX = e.clientX || (e.touches && e.touches[0].clientX) || 0;
+                prevY = e.clientY || (e.touches && e.touches[0].clientY) || 0;
+            };
+
+            const onPointerMove = (e) => {
+                if (!isDragging) return;
+                const x = e.clientX || (e.touches && e.touches[0].clientX) || 0;
+                const y = e.clientY || (e.touches && e.touches[0].clientY) || 0;
+                sneakerGroup.rotation.y += (x - prevX) * 0.012;
+                sneakerGroup.rotation.x += (y - prevY) * 0.008;
+                prevX = x;
+                prevY = y;
+            };
+
+            const onPointerUp = () => {
+                isDragging = false;
+            };
+
+            container.addEventListener('mousedown', onPointerDown);
+            window.addEventListener('mousemove', onPointerMove);
+            window.addEventListener('mouseup', onPointerUp);
+            container.addEventListener('touchstart', onPointerDown, { passive: true });
+            window.addEventListener('touchmove', onPointerMove, { passive: true });
+            window.addEventListener('touchend', onPointerUp);
+
+            window.addEventListener('resize', () => {
+                if (!container.clientWidth || !container.clientHeight) return;
+                camera.aspect = container.clientWidth / container.clientHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(container.clientWidth, container.clientHeight);
+            });
+
+            function animate() {
+                requestAnimationFrame(animate);
+                if (!isDragging) {
+                    sneakerGroup.rotation.y += 0.006;
+                }
+                renderer.render(scene, camera);
+            }
+            animate();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            renderProducts();
+            init3DSneaker();
+
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuBtn?.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            const mobileSearchToggle = document.getElementById('mobile-search-toggle');
+            const mobileSearchBar = document.getElementById('mobile-search-bar');
+            mobileSearchToggle?.addEventListener('click', () => {
+                mobileSearchBar.classList.toggle('hidden');
+            });
+
+            const desktopSearch = document.getElementById('live-search-input');
+            const mobileSearch = document.getElementById('mobile-search-input');
+            const handleSearch = (e) => {
+                searchQuery = e.target.value.trim().toLowerCase();
+                if (desktopSearch && e.target !== desktopSearch) desktopSearch.value = e.target.value;
+                if (mobileSearch && e.target !== mobileSearch) mobileSearch.value = e.target.value;
+                renderProducts();
+            };
+            desktopSearch?.addEventListener('input', handleSearch);
+            mobileSearch?.addEventListener('input', handleSearch);
+
+            const cartBtn = document.getElementById('cart-btn');
+            const cartDrawer = document.getElementById('cart-drawer');
+            const closeCartBtn = document.getElementById('close-cart-btn');
+            const cartOverlay = document.getElementById('cart-overlay');
+
+            cartBtn?.addEventListener('click', () => cartDrawer.classList.remove('hidden'));
+            closeCartBtn?.addEventListener('click', () => cartDrawer.classList.add('hidden'));
+            cartOverlay?.addEventListener('click', () => cartDrawer.classList.add('hidden'));
+        });
+    </script>
+</body>
+</html>
